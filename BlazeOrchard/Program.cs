@@ -13,8 +13,9 @@ namespace BlazeOrchard
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
-            builder.Services.AddScoped<AuthenticationStateProvider, BlazeAuthenticationStateProvider>();
+            builder.Services.AddScoped<AuthenticationStateProvider,BlazeAuthenticationStateProvider>();
             builder.RootComponents.Add<App>("app");
             
             

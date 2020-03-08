@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OrchardCore;
 [assembly: FunctionsStartup(typeof(ServerlessOrchard.Startup))]
 namespace ServerlessOrchard
 {
@@ -11,7 +12,9 @@ namespace ServerlessOrchard
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services.AddOrchardCms();
+            builder.Services.AddOrchardCore();
             
         }
+        
     }
 }

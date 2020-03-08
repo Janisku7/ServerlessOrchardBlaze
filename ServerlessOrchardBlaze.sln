@@ -4,12 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29820.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeOrchard", "BlazeOrchard\BlazeOrchard.csproj", "{0C6E900B-E092-4C5F-8909-8582B8526D5E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D43A690D-1DCC-4D20-9320-4781975F4B5E} = {D43A690D-1DCC-4D20-9320-4781975F4B5E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamOrchard.Android", "XamOrchard\XamOrchard.Android\XamOrchard.Android.csproj", "{B1393776-7950-42ED-8F66-03BCC0ABC551}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamOrchard.iOS", "XamOrchard\XamOrchard.iOS\XamOrchard.iOS.csproj", "{EF998541-F198-42AD-80DF-BA248B70F700}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamOrchard", "XamOrchard\XamOrchard\XamOrchard.csproj", "{4991BF67-0A6A-46F0-9ACC-2400B44DB8DE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D43A690D-1DCC-4D20-9320-4781975F4B5E} = {D43A690D-1DCC-4D20-9320-4781975F4B5E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamOrchard.UWP", "XamOrchard.UWP\XamOrchard.UWP.csproj", "{0F22E3F7-9A22-475C-B5A2-DE4FDCB42982}"
 EndProject
