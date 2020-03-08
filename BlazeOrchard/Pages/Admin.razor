@@ -1,11 +1,12 @@
 ﻿@page "/admin"
+@attribute [Authorize(Roles ="admin, superuser")]
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
+<h1>Admin Thing</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (users == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -21,7 +22,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var forecast in users)
             {
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
@@ -35,11 +36,11 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private WeatherForecast[] users;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        users = await Http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 
     public class WeatherForecast

@@ -49,6 +49,7 @@ namespace XamOrchard.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+                Xamarin.Forms.Forms.SetFlags("Shell_UWP_Experimental", "CarouselView_Experimental");
                 Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
