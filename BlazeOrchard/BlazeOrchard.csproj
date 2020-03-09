@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazeOrchardShared\BlazeOrchardShared.csproj" />
+  </ItemGroup>
+
 </Project>

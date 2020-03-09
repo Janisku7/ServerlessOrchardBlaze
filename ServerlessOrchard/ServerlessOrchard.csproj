@@ -10,6 +10,9 @@
     <PackageReference Include="OrchardCore.Application.Cms.Core.Targets" Version="1.0.0-rc1-12244" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlazeOrchardShared\BlazeOrchardShared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

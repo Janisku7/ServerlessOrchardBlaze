@@ -11,6 +11,7 @@ using Microsoft.JSInterop;
 using System.Text.Json;
 using System.Web;
 using System.Text.RegularExpressions;
+using BlazeOrchardShared;
 
 namespace BlazeOrchard
 {

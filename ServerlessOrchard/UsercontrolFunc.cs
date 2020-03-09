@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 
 namespace ServerlessOrchard
 {
-    public static class Function1
+    public static class UserControlFunc
     {
-        [FunctionName("Function1")]
+        [FunctionName("UserFunc")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
