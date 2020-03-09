@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using OrchardCore;
+using Dynamitey;
+
 [assembly: FunctionsStartup(typeof(ServerlessOrchard.Startup))]
 namespace ServerlessOrchard
 {
@@ -11,8 +13,11 @@ namespace ServerlessOrchard
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddOrchardCms();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthenticationCore();
             builder.Services.AddOrchardCore();
+            builder.Services.AddHttpClient();
+            builder.Services.AddDataProtection();
             
         }
         

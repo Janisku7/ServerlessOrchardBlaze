@@ -4,32 +4,66 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Text.Json;
+using BlazeOrchardShared;
+using OrchardCore.Users.Models;
+using ServerlessOrchard.Auth;
+using OrchardCore.Lucene.QueryProviders;
+using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Polly;
 
 namespace ServerlessOrchard
 {
-    public static class UserControlFunc
+    public  class UserControlFunc
     {
-        [FunctionName("UserFunc")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+        public readonly UserInfo LoggedOutUser;
+        private  readonly User _user;
+        private  HttpContext context;
+
+        public UserControlFunc()
+        {
+            LoggedOutUser = new UserInfo { IsAuthenticated = false };
+            
+        }
+
+        [FunctionName(nameof(SignIn))]
+        public  async Task SignIn(
+            [HttpTrigger(AuthorizationLevel.User, "get", Route = "user/signin")] HttpRequest req, string redirectUrl,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            if (string.IsNullOrEmpty(redirectUrl)) redirectUrl = "/";
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            await context.ChallengeAsync(TwitterDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = redirectUrl });
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            
+        }
+        [FunctionName(nameof(GetUser))]
+        public async Task<UserInfo> GetUser([HttpTrigger(AuthorizationLevel.Function, "get", Route = "user")] HttpRequest req, User user, ILogger log)
+        {
+            return context.User.Identity.IsAuthenticated? new UserInfo { Name = user.UserName, IsAuthenticated = user.IsEnabled } : LoggedOutUser;
+        }
+        [FunctionName(nameof(SignOut))]
+        public  async Task<IActionResult> SignOut([HttpTrigger(AuthorizationLevel.User,"get",Route = "user/signout")]HttpRequest req, ILogger logger)
+        {
 
-            return new OkObjectResult(responseMessage);
+            await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return new RedirectResult("~/");
+        } 
+         async Task<bool> ValidateUser ( HttpRequest req)
+        {
+            var authInfo = await AuthInfoExtensions.GetAuthInfoAsync(req);
+
+            if (authInfo.ProviderName.ToLowerInvariant() != "twitter")
+                return false;
+            
+            var user = authInfo.UserId.ToLowerInvariant();
+            return user == _user.UserName;
         }
     }
 }

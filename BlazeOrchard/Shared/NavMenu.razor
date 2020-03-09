@@ -5,7 +5,7 @@
     </button>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<nav class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -26,7 +26,8 @@
             </li>
         </AuthorizeView>
     </ul>
-</div>
+    <LoginDisplay />
+</nav>
 
 @code {
     private bool collapseNavMenu = true;
